@@ -16,6 +16,15 @@ services:
     environment:
       - TZ=Europe/London
 
+  airsonic:
+    image: airsonic/airsonic
+    ports:
+      - 4040:4040
+    volumes:
+      - "${APP_DATA}/airsonic:/airsonic/data"
+      - "${MEDIA_STORAGE}/music:/airsonic/music"
+      - "${MEDIA_STORAGE}/playlists:/airsonic/playlists"
+
   influxdb:
     image: influxdb:latest
     ports:
@@ -26,3 +35,16 @@ services:
     environment:
       - INFLUXDB_GRAPHITE_ENABLED=true
       - INFLUXDB_DB=app_metrics
+
+  # collectd:
+  #   image: quay.io/signalfuse/collectd
+  #   network_mode: host
+  #   privileged: true
+  #   depends_on:
+  #     - influxdb
+  #   volumes:
+  #     - "${APP_DATA}/collectd:/etc/collectd/managed_config"
+  #   environment:
+  #     - DISABLE_SFX_PLUGIN=True
+  #     - SF_API_TOKEN=test
+  #     - FQDN_LOOKUP=true

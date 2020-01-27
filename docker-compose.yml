@@ -36,6 +36,21 @@ services:
       - INFLUXDB_GRAPHITE_ENABLED=true
       - INFLUXDB_DB=app_metrics
 
+  deluge:
+    image: linuxserver/deluge
+    container_name: deluge
+    network_mode: host
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=timezone
+      - UMASK_SET=022 #optional
+      - DELUGE_LOGLEVEL=error #optional
+    volumes:
+      - "${APP_DATA}/deluge:/config"
+      - "${MEDIA_STORAGE}/downloads:/downloads"
+    restart: unless-stopped
+
   jackett:
     image: linuxserver/jackett
     container_name: jackett

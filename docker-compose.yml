@@ -66,20 +66,21 @@ services:
       - 9117:9117
     restart: unless-stopped
 
-  lidarr:
-    image: linuxserver/lidarr
-    container_name: lidarr
+  syncthing:
+    image: linuxserver/syncthing
+    container_name: syncthing
     environment:
       - PUID=1000
       - PGID=1000
       - TZ=Europe/London
-      - UMASK_SET=022 #optional
+      - UMASK_SET=022
     volumes:
-      - "${APP_DATA}/lidarr:/config"
-      - "${MEDIA_STORAGE}/music:/music"
-      - "${MEDIA_STORAGE}/downloads:/downloads"
+      - "${APP_DATA}/syncthing:/config"
+      - /mnt/data/backup:/data1
     ports:
-      - 8686:8686
+      - 8384:8384
+      - 22000:22000
+      - 21027:21027/udp
     restart: unless-stopped
 
   # collectd:

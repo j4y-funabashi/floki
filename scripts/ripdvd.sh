@@ -19,5 +19,7 @@ dvd_title=$(blkid -o value -s LABEL /dev/dvd)
 rip_dir="/mnt/media/downloads/dvdrips/${dvd_title}"
 #dvdbackup -M -o "${rip_dir}"
 
+echo "ripping ${dvd_title} to ${rip_dir}"
+
 hb="HandBrakeCLI"
 "${hb} --preset --input ${rip_dir} --main-feature Super HQ 1080p30 Surround"

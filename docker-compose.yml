@@ -43,19 +43,3 @@ services:
       - "${MEDIA_STORAGE}/downloads/music:/downloads"
     ports:
       - 8337:8337
-
-  airsonic:
-    image: ghcr.io/linuxserver/airsonic
-    container_name: airsonic
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Europe/London
-    volumes:
-      - "${APP_DATA}/airsonic:/config"
-      - "${MEDIA_STORAGE}/music:/music"
-      - "${MEDIA_STORAGE}/playlists:/playlists"
-      - "${MEDIA_STORAGE}/podcasts:/podcasts"
-    ports:
-      - 4040:4040
-    restart: unless-stopped

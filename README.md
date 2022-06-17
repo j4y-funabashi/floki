@@ -1,19 +1,25 @@
 # Floki
 
-home file / media / app server
+personal home server
 
+## host machine
+
+- docker
+- docker-compose
+- git
+- vim
+- snapraid
+- mergerfs
+
+## services
+
+- gollum wiki
 - plex media server
-- influxdb
-- grafana
-- collectd
-- get-iplayer?
-- youtube-dl
-- beets?
 
 ## env vars
 
-`APP_DATA` app config data
-`MEDIA_STORAGE` location of media data
+* `APP_DATA` app config data
+* `MEDIA_STORAGE` location of media data
 
 ### music
 

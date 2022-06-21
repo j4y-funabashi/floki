@@ -1,0 +1,18 @@
+#
+# setup home server mount points and mergerfs config
+#
+
+# parity
+UUID=b0ec5c14-ffcc-4708-9202-69d2d942c2d5 /mnt/parity/disk1 ext4 defaults,nofail 0 0
+
+# data disks
+# UUID=ed86568b-860b-4354-a024-96c0e59b6d3b /mnt/data/disk1 ext4 defaults 0 0
+UUID=d81afec9-54eb-4b7f-a78c-e5e2f980f79f /mnt/data/disk1 ext4 defaults 0 0
+UUID=a72ad6c6-8d1e-4d65-afd6-87304820b64c /mnt/data/disk2 ext4 defaults 0 0
+UUID=be31713c-58ab-45d3-9914-8caa6a0dcb10 /mnt/data/disk3 ext4 defaults 0 0
+
+# backup
+UUID=0ef13824-7ffa-4631-8d11-54644d561416 /mnt/data/backup ext4 defaults,nofail 0 0
+
+## mergerfs media pool
+/mnt/data/disk* /mnt/media fuse.mergerfs allow_other,direct_io,use_ino,category.create=lfs,moveonenospc=true,minfreespace=20G,fsname=mergerfsPool 0 0

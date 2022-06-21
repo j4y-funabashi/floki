@@ -11,6 +11,12 @@ personal home server
 - snapraid
 - mergerfs
 
+### create mount directories
+
+```
+sudo mkdir -p /mnt/parity/disk1 /mnt/data/disk1 /mnt/data/disk2 /mnt/data/disk3 /mnt/data/backup /mnt/media
+```
+
 ## services
 
 - gollum wiki

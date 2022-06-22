@@ -43,3 +43,16 @@ services:
       - "${MEDIA_STORAGE}/downloads/music:/downloads"
     ports:
       - 8337:8337
+
+  wiki:
+    image: gollumwiki/gollum:master
+    container_name: wiki
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+    volumes:
+      - "${BACKUP_STORAGE}/jayr/notes/wiki:/wiki"
+    ports:
+      - 4567:4567
+    restart: unless-stopped

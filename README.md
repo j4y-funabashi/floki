@@ -10,6 +10,7 @@ personal home server
 - vim
 - snapraid
 - mergerfs
+- zsh + ohmyzsh
 
 ### create mount directories
 

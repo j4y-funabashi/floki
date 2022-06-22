@@ -10,7 +10,7 @@ personal home server
 - vim
 - snapraid
 - mergerfs
-- zsh ohmyzsh
+- zsh + ohmyzsh
 
 ### create mount directories
 
@@ -22,6 +22,7 @@ sudo mkdir -p /mnt/parity/disk1 /mnt/data/disk1 /mnt/data/disk2 /mnt/data/disk3 
 
 - gollum wiki
 - plex media server
+- syncthing
 
 ## env vars
 

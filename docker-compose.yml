@@ -56,3 +56,16 @@ services:
     ports:
       - 4567:4567
     restart: unless-stopped
+
+  draw:
+    image: jgraph/drawio
+    container_name: drawio
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+    volumes:
+      - "${BACKUP_STORAGE}/jayr/notes/wiki/diagrams:/data"
+    ports:
+      - 8080:8080
+    restart: unless-stopped

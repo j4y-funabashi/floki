@@ -69,3 +69,17 @@ services:
     ports:
       - 8080:8080
     restart: unless-stopped
+
+  nextcloud:
+    image: lscr.io/linuxserver/nextcloud:latest
+    container_name: nextcloud
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+    volumes:
+      - "${APP_DATA}/nextcloud:/config"
+      - "${BACKUP_STORAGE}/jayr/notes:/data"
+    ports:
+      - 443:443
+    restart: unless-stopped

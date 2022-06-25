@@ -69,16 +69,3 @@ services:
     ports:
       - 8080:8080
     restart: unless-stopped
-
-  daapd:
-    image: lscr.io/linuxserver/daapd:latest
-    container_name: daapd
-    network_mode: host
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Europe/London
-    volumes:
-      - "${APP_DATA}/owntone:/config"
-      - "${MEDIA_STORAGE}/music:/music"
-    restart: unless-stopped

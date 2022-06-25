@@ -69,3 +69,16 @@ services:
     ports:
       - 8080:8080
     restart: unless-stopped
+
+  mpd:
+    image: vimagick/mpd
+    ports:
+      - "6600:6600"
+      - "8800:8800"
+    volumes:
+      - "${APP_DATA}/mpd:/root/.config"
+      - "${MEDIA_STORAGE}/music:/var/lib/mpd/music"
+      - "${MEDIA_STORAGE}/playlists:/var/lib/mpd/playlists"
+    devices:
+      - /dev/snd
+    restart: unless-stopped

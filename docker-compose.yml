@@ -71,14 +71,11 @@ services:
     restart: unless-stopped
 
   mpd:
-    image: vimagick/mpd
+    image: philipwold/mpd
     ports:
       - "6600:6600"
-      - "8800:8800"
+      - "8000:8000"
     volumes:
-      - "${APP_DATA}/mpd:/root/.config"
       - "${MEDIA_STORAGE}/music:/var/lib/mpd/music"
       - "${MEDIA_STORAGE}/playlists:/var/lib/mpd/playlists"
-    devices:
-      - /dev/snd
     restart: unless-stopped

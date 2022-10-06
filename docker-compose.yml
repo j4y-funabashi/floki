@@ -1,17 +1,10 @@
 version: "3.1"
 
-services:
+networks:
+  aar:
+    external: true
 
-  plex:
-    image: plexinc/pms-docker
-    container_name: plex
-    volumes:
-      - "${APP_DATA}/plex:/config"
-      - "${MEDIA_STORAGE}:/data"
-    network_mode: host
-    environment:
-      - TZ=Europe/London
-    restart: unless-stopped
+services:
 
   syncthing:
     image: linuxserver/syncthing
@@ -30,6 +23,18 @@ services:
       - 21027:21027/udp
     restart: unless-stopped
 
+# MEDIA
+
+  mpd:
+    image: philipwold/mpd
+    ports:
+      - "6600:6600"
+      - "8000:8000"
+    volumes:
+      - "${MEDIA_STORAGE}/music:/var/lib/mpd/music"
+      - "${MEDIA_STORAGE}/playlists:/var/lib/mpd/playlists"
+    restart: unless-stopped
+
   beets:
     image: ghcr.io/linuxserver/beets
     container_name: beets
@@ -44,38 +49,86 @@ services:
     ports:
       - 8337:8337
 
-  wiki:
-    image: gollumwiki/gollum:master
-    container_name: wiki
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Europe/London
+  plex:
+    image: plexinc/pms-docker
+    container_name: plex
     volumes:
-      - "${BACKUP_STORAGE}/jayr/notes/wiki:/wiki"
-    ports:
-      - 4567:4567
+      - "${APP_DATA}/plex:/config"
+      - "${MEDIA_STORAGE}:/data"
+    network_mode: host
+    environment:
+      - TZ=Europe/London
     restart: unless-stopped
 
-  draw:
-    image: jgraph/drawio
-    container_name: drawio
+#
+# AAAARR
+#
+
+  sabnzbd:
+    image: lscr.io/linuxserver/sabnzbd:latest
+    container_name: sabnzbd
     environment:
       - PUID=1000
       - PGID=1000
       - TZ=Europe/London
     volumes:
-      - "${BACKUP_STORAGE}/jayr/notes/wiki/diagrams:/data"
+      - "${APP_DATA}/sabnzbd:/config"
+      - "${MEDIA_STORAGE}/downloads/usenet:/downloads"
+      - "${MEDIA_STORAGE}/downloads/usenet/incomplete:/incomplete-downloads"
     ports:
       - 8080:8080
     restart: unless-stopped
+    networks:
+      - aar
 
-  mpd:
-    image: philipwold/mpd
-    ports:
-      - "6600:6600"
-      - "8000:8000"
+  deluge:
+    image: lscr.io/linuxserver/deluge:2.0.5-0202202181752ubuntu20.04.1-ls140
+    container_name: deluge
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+      - DELUGE_LOGLEVEL=error #optional
     volumes:
-      - "${MEDIA_STORAGE}/music:/var/lib/mpd/music"
-      - "${MEDIA_STORAGE}/playlists:/var/lib/mpd/playlists"
+      - "${APP_DATA}/deluge:/config"
+      - "${MEDIA_STORAGE}/downloads/deluge:/downloads"
+    ports:
+      - 8112:8112
+      - 6881:6881
+      - 6881:6881/udp
     restart: unless-stopped
+    networks:
+      - aar
+
+  sonarr:
+    image: lscr.io/linuxserver/sonarr:latest
+    container_name: sonarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+    volumes:
+      - "${APP_DATA}/sonaar:/config"
+      - "${MEDIA_STORAGE}/tv:/tv"
+      - "${MEDIA_STORAGE}/downloads:/downloads"
+    ports:
+      - 8989:8989
+    restart: unless-stopped
+    networks:
+      - aar
+
+  prowlarr:
+    image: lscr.io/linuxserver/prowlarr:develop
+    container_name: prowlarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+    volumes:
+      - /path/to/data:/config
+      - "${APP_DATA}/prowlaar:/config"
+    ports:
+      - 9696:9696
+    restart: unless-stopped
+    networks:
+      - aar

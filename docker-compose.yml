@@ -81,25 +81,6 @@ services:
     networks:
       - aar
 
-  deluge:
-    image: lscr.io/linuxserver/deluge:2.0.5-0202202181752ubuntu20.04.1-ls140
-    container_name: deluge
-    environment:
-      - PUID=1000
-      - PGID=1000
-      - TZ=Europe/London
-      - DELUGE_LOGLEVEL=error #optional
-    volumes:
-      - "${APP_DATA}/deluge:/config"
-      - "${MEDIA_STORAGE}/downloads/deluge:/downloads"
-    ports:
-      - 8112:8112
-      - 6881:6881
-      - 6881:6881/udp
-    restart: unless-stopped
-    networks:
-      - aar
-
   sonarr:
     image: lscr.io/linuxserver/sonarr:latest
     container_name: sonarr
@@ -113,6 +94,23 @@ services:
       - "${MEDIA_STORAGE}/downloads:/downloads"
     ports:
       - 8989:8989
+    restart: unless-stopped
+    networks:
+      - aar
+
+  radarr:
+    image: lscr.io/linuxserver/radarr:latest
+    container_name: radarr
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+    volumes:
+      - "${APP_DATA}/radaar:/config"
+      - "${MEDIA_STORAGE}/films:/movies"
+      - "${MEDIA_STORAGE}/downloads:/downloads"
+    ports:
+      - 7878:7878
     restart: unless-stopped
     networks:
       - aar

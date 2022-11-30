@@ -11,6 +11,10 @@ personal home server
 - snapraid
 - mergerfs
 - zsh + ohmyzsh
+- avahi
+
+sudo apt-get install avahi-daemon avahi-discover avahi-utils libnss-mdns mdns-scan
+sudo systemctl restart avahi-daemon
 
 ### create mount directories
 

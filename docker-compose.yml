@@ -23,7 +23,20 @@ services:
       - 21027:21027/udp
     restart: unless-stopped
 
-# MEDIA
+  wiki:
+    image: gollumwiki/gollum:master
+    container_name: wiki
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+    volumes:
+      - "${BACKUP_STORAGE}/jayr/notes/wiki:/wiki"
+    ports:
+      - 4567:4567
+    restart: unless-stopped
+
+  # MEDIA
 
   mpd:
     image: philipwold/mpd
@@ -60,9 +73,9 @@ services:
       - TZ=Europe/London
     restart: unless-stopped
 
-#
-# AAAARR
-#
+  #
+  # AAAARR
+  #
 
   sabnzbd:
     image: lscr.io/linuxserver/sabnzbd:latest

@@ -36,6 +36,16 @@ services:
       - 4567:4567
     restart: unless-stopped
 
+  flame:
+    image: pawelmalak/flame
+    container_name: flame
+    volumes:
+      - "${APP_DATA}/flame:/app/data"
+      - /var/run/docker.sock:/var/run/docker.sock
+    ports:
+      - 5005:5005
+    restart: unless-stopped
+
   # MEDIA
 
   mpd:

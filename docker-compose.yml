@@ -32,6 +32,8 @@ services:
       - TZ=Europe/London
     volumes:
       - "${BACKUP_STORAGE}/jayr/notes/wiki:/wiki"
+    command:
+      - "--allow-uploads page"
     ports:
       - 4567:4567
     restart: unless-stopped

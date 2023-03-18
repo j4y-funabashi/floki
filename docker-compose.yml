@@ -48,15 +48,6 @@ services:
       - 5005:5005
     restart: unless-stopped
 
-  dash:
-    image: mauricenino/dashdot:latest
-    restart: unless-stopped
-    privileged: true
-    ports:
-      - 3001:3001
-    volumes:
-      - /:/mnt/host:ro
-
   # MEDIA
 
   mpd:
@@ -93,6 +84,19 @@ services:
     environment:
       - TZ=Europe/London
     restart: unless-stopped
+
+  tautulli:
+    image: ghcr.io/tautulli/tautulli
+    container_name: tautulli
+    restart: unless-stopped
+    volumes:
+      - "${APP_DATA}/tautulli:/config"
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+    ports:
+      - 8181:8181
 
   #
   # AAAARR

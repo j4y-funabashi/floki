@@ -50,15 +50,21 @@ services:
 
   # MEDIA
 
-  mpd:
-    image: philipwold/mpd
+  navidrome:
+    image: deluan/navidrome:latest
+    user: 1000:1000 # should be owner of volumes
     ports:
-      - "6600:6600"
-      - "8000:8000"
-    volumes:
-      - "${MEDIA_STORAGE}/music:/var/lib/mpd/music"
-      - "${MEDIA_STORAGE}/playlists:/var/lib/mpd/playlists"
+      - "4533:4533"
     restart: unless-stopped
+    environment:
+      # Optional: put your config options customization here. Examples:
+      ND_SCANSCHEDULE: 1h
+      ND_LOGLEVEL: info  
+      ND_SESSIONTIMEOUT: 24h
+      ND_BASEURL: ""
+    volumes:
+      - "${APP_DATA}/navidrome:/data"
+      - "${MEDIA_STORAGE}/music:/music:ro"
 
   beets:
     image: ghcr.io/linuxserver/beets
@@ -71,6 +77,8 @@ services:
       - "${APP_DATA}/beets:/config"
       - "${MEDIA_STORAGE}/music:/music"
       - "${MEDIA_STORAGE}/downloads/music:/downloads"
+      - "${MEDIA_STORAGE}/music_unsorted:/unsorted_1"
+      - "${MEDIA_STORAGE}/music_unsorted_2:/unsorted_2"
     ports:
       - 8337:8337
 

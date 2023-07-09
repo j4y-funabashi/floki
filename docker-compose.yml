@@ -93,6 +93,21 @@ services:
       - TZ=Europe/London
     restart: unless-stopped
 
+  jellyfin:
+    image: lscr.io/linuxserver/jellyfin:latest
+    container_name: jellyfin
+    environment:
+      - PUID=1000
+      - PGID=1000
+      - TZ=Europe/London
+    volumes:
+      - "${APP_DATA}/jellyfin:/config"
+      - "${MEDIA_STORAGE}/tv:/data/tvshows"
+      - "${MEDIA_STORAGE}/films:/data/movies"
+    ports:
+      - 8096:8096
+    restart: unless-stopped
+
   tautulli:
     image: ghcr.io/tautulli/tautulli
     container_name: tautulli
